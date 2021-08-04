@@ -1,12 +1,19 @@
 package com.dsalgms;
 
-import java.util.Arrays;
+
 
 public class Main {
+    static class Temp {
+        int a;
+    }
     public static void main(String args[]) {
-        InsertionSort iSort = new InsertionSort();
-        System.out.println(Arrays.toString(iSort.sortIntegerArray(new int[]{100,25,39,-75,-10,500})));
-        System.out.println(Arrays.toString(iSort.sortIntegerArray(new int[]{1,-20})));
+        Temp t1 = new Temp();
+        t1.a = 2;
+        Temp t2 = t1;
+        Temp t3 = t2;
+
+        t2.a = 5;
+        System.out.println(t3.a);
 
     }
 }

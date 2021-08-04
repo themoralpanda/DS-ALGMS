@@ -65,6 +65,7 @@ public class StackWithLinkedList<T> implements Iterable<T>{
 		public T next() {
 			Node temp = current;
 			current = current.next;
+			temp.next = null;
 			return temp.data;
 		}
 	}
