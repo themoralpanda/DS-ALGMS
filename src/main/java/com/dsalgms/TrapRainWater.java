@@ -1,4 +1,8 @@
-class Solution {
+package com.dsalgms;
+
+import java.util.Stack;
+
+class TrapRainWater {
     public int trap(int[] height) {            
         int i = 0;
         //Loop until first non zero +ve int.

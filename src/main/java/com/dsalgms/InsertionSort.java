@@ -1,4 +1,4 @@
-package com.dsalgms.src;
+package java.com.dsalgms;
 
 import java.util.Arrays;
 

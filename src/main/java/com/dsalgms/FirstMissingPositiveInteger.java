@@ -1,4 +1,8 @@
-class Solution {
+package com.dsalgms;
+
+import java.util.Arrays;
+
+class FirstMissingPositiveInteger {
     public int firstMissingPositive(int[] nums) {
         if(nums.length==0) return 1;
         boolean[] bitVector = new boolean[nums.length];        
