@@ -62,7 +62,11 @@ class StackWithLinkedListTest {
         for(String el : st) {
             System.out.print(el);
         }
-        st.pop();
+        st.push("a.v2");
+        Assertions.assertEquals("a.v2", st.pop());
+        for(String el : st) {
+            System.out.print(el);
+        }
     }
 
     @Test
