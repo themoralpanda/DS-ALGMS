@@ -59,8 +59,13 @@ class UGraphTest {
         ug.addEdge(4, 5);
         ug.addEdge(4, 6);
         ug.addEdge(4, 7);
+        ug.addEdge(5, 6);
 
+        System.out.println("Bfs traversal");
         ug.bfsTraversal(1);
+
+        System.out.println("Dfs traversal");
+        ug.dfsTraversal(1);
     }
 
 }

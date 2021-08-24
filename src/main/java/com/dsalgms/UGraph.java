@@ -91,6 +91,22 @@ public class UGraph<T> implements GraphAPI<T> {
         System.out.println();
     }
 
+    public void dfsTraversal(T s) {
+        dfsTraversal(s, new HashMap<>());
+    }
+
+    private void dfsTraversal(T s, Map<T, Boolean> visitedMap) {
+        if(s == null || !ifNodeExists(s)) throw new IllegalArgumentException();
+
+        if(!visitedMap.containsKey(s)) {
+            visitedMap.put(s,  true);
+            System.out.print(s + ", ");
+            for(T el: adj(s)) {
+                dfsTraversal(el, visitedMap);
+            }
+        }
+    }
+
     private boolean ifNodeExists(T node) {
         return ug.containsKey(node);
     }
