@@ -66,6 +66,9 @@ class UGraphTest {
 
         System.out.println("Dfs traversal");
         ug.dfsTraversal(1);
+
+        System.out.println("Dfs traversal with stack");
+        ug.dfsWithStack(1);
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Stack;
 
 public class UGraph<T> implements GraphAPI<T> {
 
@@ -105,6 +106,27 @@ public class UGraph<T> implements GraphAPI<T> {
                 dfsTraversal(el, visitedMap);
             }
         }
+    }
+
+    public void dfsWithStack(T s) {
+        if(s == null || !ifNodeExists(s)) throw new IllegalArgumentException();
+
+        HashMap<T, Boolean> visitedNodes = new HashMap<>();
+        Stack<T> stack = new Stack<>();
+
+        stack.push(s);
+        while(!stack.isEmpty()) {
+            T curr = stack.pop();
+            visitedNodes.put(curr, true);
+            System.out.print(curr + ", ");
+            for (T el : adj(curr)) {
+               if(!visitedNodes.containsKey(el)) {
+                   if(!stack.contains(el))
+                    stack.push(el);
+               }
+            }
+        }
+        System.out.println();
     }
 
     private boolean ifNodeExists(T node) {
