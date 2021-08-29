@@ -116,16 +116,18 @@ public class DGraph<T> implements GraphAPI<T> {
     }
 
     public void topologicalSort() {
-        HashMap<T, Boolean> visitedMap = new HashMap<>();
-        Stack<T> stack = new Stack<>();
-        for(T el: dg.keySet()) {
-            if(!visitedMap.containsKey(el))
-                reversePostOrder(el, visitedMap, stack);
-        }
+        if(!hasCycles()) {
+            HashMap<T, Boolean> visitedMap = new HashMap<>();
+            Stack<T> stack = new Stack<>();
+            for(T el: dg.keySet()) {
+                if(!visitedMap.containsKey(el))
+                    reversePostOrder(el, visitedMap, stack);
+            }
 
-        System.out.println();
-        while(!stack.isEmpty()){
-            System.out.print(stack.pop() +", ");
+            System.out.println();
+            while(!stack.isEmpty()){
+                System.out.print(stack.pop() +", ");
+            }
         }
     }
 
@@ -140,28 +142,32 @@ public class DGraph<T> implements GraphAPI<T> {
         }
     }
 
-    private void hasCycles() {
+
+    public boolean hasCycles() {
         HashMap<T, Boolean> visitedMap = new HashMap<>();
-        Stack<T> stack;
-        for(T el : dg.keySet()) {
-            if(!visitedMap.containsKey(el))
-                stack = new Stack<>();
-                dfsWithCyclicCircuitBreaker(el, visitedMap, stack);
+        try {
+            for(T el : dg.keySet()) {
+                if(!visitedMap.containsKey(el))
+                    findCycles(el, visitedMap);
+            }
+        } catch (IllegalStateException e) {
+            System.out.println("The graph has cycles. Topological order cannot be determined");
+            return true;
         }
+        return false;
     }
 
-    private boolean dfsWithCyclicCircuitBreaker(T node, HashMap<T, Boolean> visitedMap, Stack<T> stack) {
+    private void findCycles(T node, HashMap<T, Boolean> visitedMap) {
         if(!visitedMap.containsKey(node)) {
             visitedMap.put(node, true);
-            stack.push(node);
+            for(T el: visitedMap.keySet()) {
+                if(isConnected(node, el))
+                    throw new IllegalStateException("Graph has cycles");
+            }
             for(T el: adj(node)) {
-                if(!visitedMap.containsKey(el)) {
-                    for(T e : stack) {
-                        if(isConnected(el, e)) return false;
-                    }
-                    dfsWithCyclicCircuitBreaker(el, visitedMap, stack);
-                }
+                findCycles(el, visitedMap);
             }
         }
     }
+
 }

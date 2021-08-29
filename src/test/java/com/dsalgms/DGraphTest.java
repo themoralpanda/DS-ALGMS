@@ -53,6 +53,7 @@ class DGraphTest {
         dg.add(8);
         dg.add(9);
         dg.add(10);
+        dg.add(11);
 
         dg.addEdge(1, 2);
         dg.addEdge(1, 3);
@@ -66,12 +67,11 @@ class DGraphTest {
         dg.addEdge(4, 7);
         dg.addEdge(5, 6);
 
+
         dg.addEdge(8, 9);
         dg.addEdge(9, 10);
-
-        dg.add(11);
         dg.addEdge(10, 11);
-        dg.addEdge(11, 8);
+
 
         System.out.println("Bfs traversal");
         dg.bfsTraversal(1);
