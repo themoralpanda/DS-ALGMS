@@ -84,6 +84,8 @@ class DGraphTest {
         System.out.println();
         System.out.println("Topological sort");
         dg.topologicalSort();
+
+        dg.printStrongComponents();
     }
 
 }

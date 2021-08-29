@@ -10,15 +10,19 @@ import java.util.Stack;
 public class DGraph<T> implements GraphAPI<T> {
 
     private Map<T, HashSet<T>> dg;
+    private Map<T, HashSet<T>> rdg;
 
     public DGraph() {
         dg = new HashMap<>();
+        rdg = new HashMap<>();
     }
 
     @Override
     public void add(T node) {
         if(!ifExists(node))
             dg.put(node, new HashSet<>());
+        if(!ifExistsInRdg(node))
+            rdg.put(node, new HashSet<>());
     }
 
     @Override
@@ -35,6 +39,7 @@ public class DGraph<T> implements GraphAPI<T> {
     public void addEdge(T n1, T n2) {
         if(n1 == null || n2 == null || !ifExists(n1) || !ifExists(n2)) throw new IllegalArgumentException();
         dg.get(n1).add(n2);
+        rdg.get(n2).add(n1);
     }
 
     @Override
@@ -47,6 +52,11 @@ public class DGraph<T> implements GraphAPI<T> {
     public Iterable<T> adj(T node) {
         if(node == null || !ifExists(node) ) throw new IllegalArgumentException();
         return dg.get(node);
+    }
+
+    public Iterable<T> adjInReverseGraph(T node) {
+        if(node == null || !ifExists(node) ) throw new IllegalArgumentException();
+        return rdg.get(node);
     }
 
     @Override
@@ -77,6 +87,11 @@ public class DGraph<T> implements GraphAPI<T> {
     private boolean ifExists(T node) {
         return dg.containsKey(node);
     }
+
+    private boolean ifExistsInRdg(T node) {
+        return rdg.containsKey(node);
+    }
+
 
     public void bfsTraversal(T node) {
         if(node == null || !ifExists(node)) throw new IllegalArgumentException();
@@ -169,5 +184,56 @@ public class DGraph<T> implements GraphAPI<T> {
             }
         }
     }
+
+    public void printStrongComponents() {
+        Map<T, Boolean> visitedMap = new HashMap<>();
+        Stack<T> stack = new Stack<>();
+
+        for(T el: rdg.keySet()) {
+            if(!visitedMap.containsKey(el)) {
+                reversePostOrderInReverseGraph(el, visitedMap, stack);
+            }
+        }
+
+        dfsWithGivenOrder(stack);
+    }
+
+    private void dfsWithGivenOrder(Stack<T> stack) {
+        Map<T, Boolean> visitedMap = new HashMap<>();
+        System.out.println("Strong components in Graph");
+        while(!stack.isEmpty()) {
+            T el = stack.pop();
+            if(!visitedMap.containsKey(el)) {
+                dfsInReverseGraph(el, visitedMap);
+                System.out.println();
+            }
+        }
+    }
+
+    private void dfsInReverseGraph(T node, Map<T, Boolean> visitedMap) {
+        if(!visitedMap.containsKey(node)) {
+            visitedMap.put(node, true);
+            System.out.print(node+ ", ");
+            for(T el: adjInReverseGraph(node)) {
+                if(!visitedMap.containsKey(el))
+                    dfsInReverseGraph(el, visitedMap);
+            }
+        }
+    }
+
+    private void reversePostOrderInReverseGraph(T node, Map<T, Boolean> visitedMap, Stack<T> stack) {
+        if(!visitedMap.containsKey(node)) {
+            visitedMap.put(node, true);
+            for(T el: adjInReverseGraph(node)) {
+                if(!visitedMap.containsKey(el))
+                    reversePostOrderInReverseGraph(el, visitedMap, stack);
+            }
+            stack.push(node);
+        }
+    }
+
+
+
+
 
 }
