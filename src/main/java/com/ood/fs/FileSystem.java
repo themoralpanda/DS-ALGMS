@@ -7,7 +7,7 @@ package com.ood.fs;
  */
 public interface FileSystem {
 
-    Directory createDirectory(String path);
+    Directory createDirectory(String path, String name) throws IllegalArgumentException;
 
     File createFile(String path, File f);
 

@@ -1,6 +1,9 @@
 package com.ood.fs;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Directory {
     private String name;
@@ -9,8 +12,24 @@ public class Directory {
     private long createdAt;
     private long updatedAt;
 
-    private List<File> files;
-    private List<Directory> directories;
+    private Set<File> files;
+    private Set<Directory> subDirectories;
+
+    public File addFile(File f) {
+        if(files == null)
+            files = new HashSet<>();
+        files.add(f);
+        f.setParent(this);
+        return f;
+    }
+
+    public Directory addDirectory(Directory d) {
+        if(subDirectories == null)
+            subDirectories = new HashSet<>();
+        subDirectories.add(d);
+        d.parent = this;
+        return d;
+    }
 
     public String getName() {
         return name;

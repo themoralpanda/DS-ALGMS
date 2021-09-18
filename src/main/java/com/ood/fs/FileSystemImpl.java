@@ -12,8 +12,22 @@ public class FileSystemImpl implements FileSystem {
     }
 
     @Override
-    public Directory createDirectory(String path) {
-        return null;
+    public Directory createDirectory(String path, String name) throws IllegalArgumentException {
+        if(!isValidPath(path)) throw new IllegalArgumentException();
+        Directory d = new Directory();
+        d.setName(name);
+        String[] crumbs = path.split("/");
+        if(crumbs.length == 1)
+            return root.addDirectory(d);
+
+    }
+
+
+
+    public boolean isValidPath(String path) {
+        if(path == null || path.isEmpty()) return false;
+        if(path.charAt(0) != '/') return false;
+        return true;
     }
 
     @Override
