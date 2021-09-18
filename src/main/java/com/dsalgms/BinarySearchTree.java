@@ -1,6 +1,8 @@
 package com.dsalgms;
 
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 /*
@@ -317,5 +319,23 @@ public class BinarySearchTree<T> {
         System.out.print(" "+root.data);
         if(root.left != null)
             descendingOrder(root.left);
+    }
+
+
+    public void bfs() {
+        if(root == null) return;
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        System.out.println("BFS traversal");
+        bfs(queue);
+    }
+
+    private void bfs(Queue<Node> queue) {
+        while(!queue.isEmpty()) {
+            Node curr = queue.poll();
+            System.out.print(curr.data + " , ");
+            if(curr.left != null) queue.add(curr.left);
+            if(curr.right != null) queue.add(curr.right);
+        }
     }
 }

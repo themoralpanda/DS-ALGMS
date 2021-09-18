@@ -14,6 +14,7 @@ class BinarySearchTreeTest {
         bst.insert(10);
         bst.insert(7);
         bst.insert(8);
+
         bst.insert(5);
         bst.insert(6);
         bst.insert(4);
@@ -50,6 +51,7 @@ class BinarySearchTreeTest {
         bst.printPreOrder();
         bst.printPostOrder();
         bst.printDescendingOrder();
+        bst.bfs();
 
 
         Assertions.assertEquals(2, bst.search(2));
