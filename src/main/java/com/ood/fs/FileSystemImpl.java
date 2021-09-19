@@ -19,6 +19,7 @@ public class FileSystemImpl implements FileSystem {
         String[] crumbs = path.split("/");
         if(crumbs.length == 1)
             return root.addDirectory(d);
+        return d;
 
     }
 
